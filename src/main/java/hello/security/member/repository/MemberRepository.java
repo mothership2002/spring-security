@@ -21,7 +21,11 @@ public class MemberRepository {
 	public Optional<Member> findById(Long id) {
 		return memberRepository.findById(id);
 	}
-	
+
+	public Optional<Member> findByEmail(String email) {
+		return memberRepository.findByEmail(email);
+	}
+
 	public boolean validateAccount(String email) {
 		Optional<Member> findByEmail = memberRepository.findByEmail(email);
 		if (findByEmail.isPresent()) {
