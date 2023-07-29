@@ -11,35 +11,57 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 public class SecurityConfig {
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 //		http.authorizeRequests()
 //			.antMatchers("/","/home").permitAll()
 //			.antMatchers("/admin/**").hasRole("ADMIN")
 //			.and()
 //			.formLogin().disable();
 
-		http.csrf().disable()
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and()
-				.formLogin().disable()
-				.httpBasic().disable()
-				.apply();
+        http
+                .csrf().disable()
+                .cors().configurationSource(configurationSource())
+            .and()
+                .formLogin().disable()
+                .httpBasic().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+                .authorizeHttpRequests()
+                .antMatchers(
+                        "/v1/login",
+                        "/v1/home")
+                .permitAll()
+                .anyRequest().authenticated();
 
-		return http.build();
-	}
+        return http.build();
+    }
 
-	public AuthenticationManager authenticationManager() {
-		return
-	}
+//	public AuthenticationManager authenticationManager() {
+//		return
+//	}
+
+    @Bean
+    public CorsConfigurationSource configurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        config.setAllowCredentials(false);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
 }

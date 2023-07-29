@@ -1,4 +1,4 @@
-package hello.security.config;
+package hello.security.config.security;
 
 import hello.security.member.domain.entity.Member;
 import org.springframework.security.core.GrantedAuthority;

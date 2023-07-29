@@ -1,6 +1,6 @@
 package hello.security.member.service;
 
-import hello.security.config.PrincipalDetail;
+import hello.security.config.security.PrincipalDetail;
 import hello.security.member.domain.dto.MemberJoinDto;
 import hello.security.member.domain.entity.Member;
 import hello.security.member.exception.NotFoundMemberException;
@@ -31,9 +31,10 @@ public class MemberService implements UserDetailsService {
 
 	// 계정 벨리데이트가 끝났다 가정
 	@Transactional
-	public Member join(MemberJoinDto memberDto) {
+	public Long join(MemberJoinDto memberDto) {
+		validateAccount(memberDto.getEmail()); // 중복이 있으면 에러를 내므로 후속처리 하지 않음
 		Member member = new Member(memberDto.getEmail(), encoder.encode(memberDto.getPassword()), memberDto.getAddress());
-		return memberRepository.save(member);
+		return memberRepository.save(member).getId();
 	}
 	
 	public boolean validateAccount(String email) {

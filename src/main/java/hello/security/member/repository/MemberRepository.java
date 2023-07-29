@@ -31,6 +31,7 @@ public class MemberRepository {
 		if (findByEmail.isPresent()) {
 			throw new EmailDuplicateException("이메일 중복");
 		}
-		return !findByEmail.isPresent();
+
+		return true;
 	}
 }

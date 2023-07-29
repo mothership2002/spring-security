@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberJoinDto {
@@ -27,7 +26,7 @@ public class MemberJoinDto {
 	@NotBlank(message = "올바른 비밀번호 형식으로 작성하세요.")
 	private String password;
 	
-	private Boolean passwordFlag; //?
+	private Boolean passwordValid; //?
 	
 	private Address address;
 	

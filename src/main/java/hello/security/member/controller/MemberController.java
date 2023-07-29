@@ -9,18 +9,18 @@ import hello.security.member.domain.dto.MemberJoinDto;
 import hello.security.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 
-@Controller
-@RequiredArgsConstructor
+//@Controller
+//@RequiredArgsConstructor
+@Deprecated
 public class MemberController {
 	
-	private final MemberService memberService;
+//	private final MemberService memberService;
 	
 	@GetMapping("/home")
 	public String main(Model model) {
 		model.addAttribute("hello", "hello thymeleaf");
 		return "index";
 	}
-	
 	@GetMapping("/login")
 	public String loginPage() {
 		return "login/login";
@@ -36,9 +36,9 @@ public class MemberController {
 		return "member/join";
 	}
 	
-	@PostMapping("/member")
-	public void join(MemberJoinDto memberDto) {
-		memberService.join(memberDto);
-	}
+//	@PostMapping("/member")
+//	public void join(MemberJoinDto memberDto) {
+//		memberService.join(memberDto);
+//	}
 	
 }
