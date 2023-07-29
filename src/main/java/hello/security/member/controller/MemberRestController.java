@@ -18,7 +18,8 @@ public class MemberRestController {
 
     @GetMapping("/hello")
     public ResponseEntity<String> hello() {
-        return new ResponseEntity<>("hello", HttpStatus.OK);
+        throw new RuntimeException();
+//        return new ResponseEntity<>("hello", HttpStatus.OK);
     }
 
     @GetMapping("/hello2")

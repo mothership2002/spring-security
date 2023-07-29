@@ -1,18 +1,23 @@
 package hello.security.config;
 
 import hello.security.config.security.JwtAuthenticationFilter;
+import hello.security.config.security.JwtProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -20,7 +25,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity(debug = true)
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+//    private final UserDetailsService memberService;
+    private final JwtProvider jwtProvider;
 
 //    @Bean
 //    public WebSecurityCustomizer webSecurityCustomizer() {
@@ -55,14 +64,12 @@ public class SecurityConfig {
                         "/v1/hello",
                         "/error")
                 .permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+            .and();
+//                .addFilterBefore(, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
-
-//	public AuthenticationManager authenticationManager() {
-//		return
-//	}
 
     @Bean
     public CorsConfigurationSource configurationSource() {
@@ -74,6 +81,4 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", config);
         return source;
     }
-
-
 }
