@@ -12,6 +12,7 @@ import hello.security.member.controller.MemberController;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Deprecated
 @ControllerAdvice(basePackageClasses = MemberController.class)
 public class MemberControllerAdvice extends ResponseEntityExceptionHandler {
 

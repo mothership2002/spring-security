@@ -14,12 +14,22 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/v1")
 public class MemberRestController {
 
-	private final MemberService memberService;
+    private final MemberService memberService;
 
-	@PostMapping("/member")
-	public ResponseEntity<Long> join(@RequestBody MemberJoinDto memberDto) {
-		return new ResponseEntity<>(memberService.join(memberDto), HttpStatus.OK);
-	}
+    @GetMapping("/hello")
+    public ResponseEntity<String> hello() {
+        return new ResponseEntity<>("hello", HttpStatus.OK);
+    }
+
+    @GetMapping("/hello2")
+    public ResponseEntity<String> hello2() {
+        return new ResponseEntity<>("hello2", HttpStatus.OK);
+    }
+
+    @PostMapping("/member")
+    public ResponseEntity<Long> join(@RequestBody MemberJoinDto memberDto) {
+        return new ResponseEntity<>(memberService.join(memberDto), HttpStatus.OK);
+    }
 
 //	@PatchMapping("/member")
 //	public ResponseEntity<MemberInfoDto> currentUserInfo() {
@@ -28,8 +38,8 @@ public class MemberRestController {
 //	}
 
 
-	@PostMapping("/member/email")
-	public ResponseEntity<String> duplicateEmail(@RequestBody String email) {
-		return new ResponseEntity<>(String.valueOf(memberService.validateAccount(email)), HttpStatus.OK);
-	}
+    @PostMapping("/member/email")
+    public ResponseEntity<String> duplicateEmail(@RequestBody String email) {
+        return new ResponseEntity<>(String.valueOf(memberService.validateAccount(email)), HttpStatus.OK);
+    }
 }
