@@ -19,5 +19,6 @@ logging:
     org.hibernate.sql: debug
 
 jwt:
+  header: Authorization
   secret-key: secretKey
-  validate-day: 90
+  expired-date: 90
