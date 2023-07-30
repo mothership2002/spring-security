@@ -20,5 +20,5 @@ logging:
 
 jwt:
   header: Authorization
-  secret-key: secretKey
+  secret-key: c3ByaW5nLWJvb3QtcG9ydGZvbGlvLXdlYi1zZXJ2aWNlLWZvci1qc29uLXdlYi10b2tlbi1zZWNyZXQta2V5LXRlc3Q=
   expired-date: 90

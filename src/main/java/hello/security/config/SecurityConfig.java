@@ -28,7 +28,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-//    private final UserDetailsService memberService;
+    private final UserDetailsService memberService;
     private final JwtProvider jwtProvider;
 
 //    @Bean
@@ -36,10 +36,6 @@ public class SecurityConfig {
 //        return web -> web.ignoring().regexMatchers("/favicon.ico", "/error");
 //    }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -65,7 +61,8 @@ public class SecurityConfig {
                         "/error")
                 .permitAll()
                 .anyRequest().authenticated()
-            .and();
+            .and()
+                .userDetailsService(memberService);
 //                .addFilterBefore(, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

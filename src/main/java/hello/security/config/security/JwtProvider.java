@@ -2,6 +2,7 @@ package hello.security.config.security;
 
 import hello.security.config.JwtProperties;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -23,20 +24,20 @@ public class JwtProvider {
 
     @PostConstruct
     public void init() {
-        byte[] keyBytes = properties.getSecretKey().getBytes();
+        byte[] keyBytes = Decoders.BASE64.decode(properties.getSecretKey());
         key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String createToken(Authentication authentication) {
-        String authorities = authentication.getAuthorities().stream().
-                map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(","));
+//    public String createToken(Authentication authentication) {
+//        String authorities = authentication.getAuthorities().stream().
+//                map(GrantedAuthority::getAuthority)
+//                .collect(Collectors.joining(","));
+//
+//        LocalDateTime now = LocalDateTime.now();
+//        LocalDateTime expiredDate = now.plusSeconds(properties.getExpiredSecond());
+//        return Jwts.builder()
+//                .setSubject("auth");
+//                .
 
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime expiredDate = now.plusSeconds(properties.getExpiredSecond());
-        return Jwts.builder()
-                .setSubject("auth")
-                .
-
-    }
+//    }
 }
